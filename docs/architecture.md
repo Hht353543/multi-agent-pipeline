@@ -21,6 +21,8 @@ plan → code → review →（fix → review 循环）→ test → done
 
 ## 调度协议
 
+调度协议的枚举、stage↔agent 一致性规则与校验逻辑以 `src/agent_pipeline/protocol.py` 为唯一事实来源；以下为说明性摘要。
+
 总控每次输出一个 JSON 对象：
 
 ```json
@@ -35,12 +37,14 @@ plan → code → review →（fix → review 循环）→ test → done
 - `stage` 决定当前流水线位置；
 - `agent` 决定下一个接收 `input` 的角色；
 - `input` 必须是完整内容，包含下游 Agent 所需的全部上下文。
+- 实际输出可用 `agent-pipeline validate-output` 进行机器校验。
 
 ## 参数
 
 | 参数 | 默认值 | 位置 |
 | --- | --- | --- |
 | 最大复审轮数 | 3 | `prompts/00-orchestrator.md` 工作流程第 4 条 |
+| 单阶段输入上限 | 约 8000 token | `protocol.MAX_INPUT_TOKENS` 与 orchestrator 规则 |
 | 测试框架 | pytest | `templates/tester.md` 占位符 |
 
 ## 扩展方式

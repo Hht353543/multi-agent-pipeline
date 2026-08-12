@@ -7,16 +7,20 @@ import re
 from pathlib import Path
 
 from agent_pipeline.prompts import project_root, prompts_dir, templates_dir
-
-REQUIRED_MARKERS = {
-    "00-orchestrator.md": ("System Prompt", "工作流程", "输出 JSON", "阶段说明"),
-    "01-planner.md": ("System Prompt", "需求理解", "技术选型", "验收标准", "待确认问题"),
-    "02-coder.md": ("System Prompt", '"path"', '"code"', '"notes"'),
-    "03-reviewer.md": ("System Prompt", '"verdict"', '"issues"', '"summary"'),
-    "04-tester.md": ("System Prompt", '"run_command"', '"coverage_note"'),
-}
+from agent_pipeline.protocol import REQUIRED_MARKERS
 
 FENCE = "```"
+
+
+def parse_json_object(text: str) -> object:
+    """解析 Agent 输出文本；支持裸 JSON 或 ```json 代码块。"""
+    stripped = text.strip()
+    if stripped.startswith("```"):
+        blocks = extract_json_blocks(stripped)
+        if not blocks:
+            raise ValueError("未找到 ```json 代码块")
+        stripped = blocks[0]
+    return json.loads(stripped)
 
 
 def extract_json_blocks(text: str) -> list[str]:
@@ -35,7 +39,11 @@ def validate_suite(root: Path | None = None) -> list[str]:
         errors.append(f"缺少提示词文件: {name}")
 
     for path in files:
-        text = path.read_text(encoding="utf-8")
+        try:
+            text = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError) as exc:
+            errors.append(f"{path.name}: 无法读取文件（{exc}）")
+            continue
         if text.count(FENCE) % 2 != 0:
             errors.append(f"{path.name}: 代码围栏不配对")
         for marker in REQUIRED_MARKERS.get(path.name, ()):
@@ -48,7 +56,11 @@ def validate_suite(root: Path | None = None) -> list[str]:
                 errors.append(f"{path.name}: JSON 无法解析（{exc.msg}）")
 
     for path in sorted(templates_dir(root).glob("*.md")):
-        text = path.read_text(encoding="utf-8")
+        try:
+            text = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError) as exc:
+            errors.append(f"{path.name}: 无法读取文件（{exc}）")
+            continue
         if "{{" not in text or "}}" not in text:
             errors.append(f"{path.name}: 模板缺少占位符")
 

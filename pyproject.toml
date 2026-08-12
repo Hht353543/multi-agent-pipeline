@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=77"]
+requires = ["setuptools>=77", "packaging>=24.2"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -24,7 +24,7 @@ classifiers = [
 dependencies = []
 
 [project.optional-dependencies]
-dev = ["pytest>=7"]
+dev = ["pytest>=7", "ruff", "mypy", "pytest-cov"]
 
 [project.scripts]
 agent-pipeline = "agent_pipeline.cli:main"
@@ -32,5 +32,30 @@ agent-pipeline = "agent_pipeline.cli:main"
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.data-files]
+"share/agent-pipeline/prompts" = ["prompts/*.md"]
+"share/agent-pipeline/templates" = ["templates/*.md"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+addopts = "--cov=agent_pipeline --cov-report=term-missing"
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+
+[tool.mypy]
+python_version = "3.10"
+files = ["src"]
+strict = true
+
+[tool.coverage.run]
+source = ["agent_pipeline"]
+branch = true
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true

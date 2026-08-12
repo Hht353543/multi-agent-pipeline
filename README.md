@@ -59,6 +59,7 @@ python -m pip install -e ".[dev]"
 agent-pipeline list          # 列出全部角色
 agent-pipeline show planner  # 查看某个角色的系统提示词
 agent-pipeline validate      # 校验提示词文件结构
+agent-pipeline validate-output output.json  # 校验 Agent 输出的调度 JSON
 ```
 
 ## 开发

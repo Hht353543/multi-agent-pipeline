@@ -1,0 +1,10 @@
+{
+  "id": "csv-missing-values",
+  "description": "CSV 缺失值统计任务，验证完整流水线闭环",
+  "user_request": "帮我写一个 Python 脚本，读取 CSV 并统计每列缺失值。",
+  "expected": {
+    "stages": ["plan", "code", "review", "test", "done"],
+    "outputs_valid": true,
+    "notes": "所有 JSON 输出必须通过 validate_dispatch_output / validate-output 校验；fix 轮数允许为 0。"
+  }
+}

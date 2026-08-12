@@ -1,0 +1,10 @@
+{
+  "id": "ambiguous-requirements",
+  "description": "需求不明确场景，验证待确认问题或假设说明",
+  "user_request": "帮我做个东西。",
+  "expected": {
+    "stages": ["plan", "code", "review", "test", "done"],
+    "outputs_valid": true,
+    "notes": "Orchestrator 必须先整理待确认问题返回用户，或按最合理假设继续并在 input 中附带假设说明。"
+  }
+}

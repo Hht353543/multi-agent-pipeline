@@ -1,5 +1,7 @@
 # 需求分析 Agent（Planner）
 
+> prompt-version: 0.1.0
+
 **职责**：把用户需求拆解成可执行的开发计划（含验收标准）。
 
 **用户输入模板**：[templates/planner.md](../templates/planner.md)
