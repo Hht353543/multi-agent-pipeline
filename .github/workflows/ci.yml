@@ -27,6 +27,8 @@ jobs:
         run: mypy src
       - name: Run tests
         run: pytest
+      - name: Evaluation smoke (mock, no API key)
+        run: python -m evaluation.run --mode mock
 
   package-smoke:
     runs-on: ubuntu-latest
