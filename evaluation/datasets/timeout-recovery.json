@@ -1,0 +1,7 @@
+{
+  "id": "timeout-recovery",
+  "name": "超时/失败恢复",
+  "description": "LLM 调用失败后通过 checkpoint 恢复，第二次运行从断点续跑并完成。",
+  "request": "写一个 CSV 清洗工具（timeout 场景，校验 checkpoint 恢复）。",
+  "expect": "timeout_recovery"
+}

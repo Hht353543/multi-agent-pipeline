@@ -1,0 +1,7 @@
+{
+  "id": "ambiguous-requirements",
+  "name": "歧义需求处理",
+  "description": "需求不明确时，编排器应返回待确认问题而不是盲目执行。",
+  "request": "帮我做一个数据处理工具，需求不明确，待确认输入格式。",
+  "expect": "ambiguous"
+}

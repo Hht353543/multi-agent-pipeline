@@ -1,0 +1,7 @@
+{
+  "id": "csv-missing-values",
+  "name": "完整流水线：CSV 缺失值处理",
+  "description": "正常需求，覆盖 plan -> code -> review -> test -> done 全流程。",
+  "request": "写一个 Python 工具，读取 CSV 并填充缺失值，输出清洗后的文件。",
+  "expect": "success"
+}

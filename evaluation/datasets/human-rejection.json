@@ -1,0 +1,7 @@
+{
+  "id": "human-rejection",
+  "name": "人工驳回计划",
+  "description": "计划提交人工审批时被驳回，流水线必须立即停止并返回 rejected。",
+  "request": "写一个 CSV 清洗工具。",
+  "expect": "rejected"
+}
